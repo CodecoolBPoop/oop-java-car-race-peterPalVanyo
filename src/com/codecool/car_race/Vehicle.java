@@ -1,52 +1,54 @@
 package com.codecool.car_race;
 
-public class Vehicle {
+public abstract class Vehicle {
 
-    int speed;
-    String name;
-    int distanceTraveled;
+    private String name;
+    private int speed;
+    private int actualSpeed;
+    private int distanceTravelled;
 
-
-    public void prepareForLap(Race race) {
-        System.out.println("this is the vehicle prepareForLap");
+    public Vehicle() {
+        this.name = generateName();
+        this.speed = generateSpeed();
     }
 
-    public int moveForAnHour(){
+    public String generateName() {
+        return null;
+    }
+
+    public int generateSpeed() {
         return 0;
     }
 
-    //constructor
+    public void prepareForLap(Race race) {
 
-    public Vehicle(String name, int speed, int distanceTraveled) {
-        this.name = name;
-        this.speed = speed;
-        this.distanceTraveled = distanceTraveled;
     }
 
-
-    //getter and setter
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void moveForAnHour() {
+        setDistanceTravelled(getDistanceTravelled() + getActualSpeed());
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getSpeed() {
+        return speed;
     }
 
-    public int getDistanceTraveled() {
-        return distanceTraveled;
+    public int getActualSpeed() {
+        return actualSpeed;
     }
 
-    public void setDistanceTraveled(int distanceTraveled) {
-        this.distanceTraveled = distanceTraveled;
+    public void setActualSpeed(int actualSpeed) {
+        this.actualSpeed = actualSpeed;
+    }
+
+    public int getDistanceTravelled() {
+        return distanceTravelled;
+    }
+
+    public void setDistanceTravelled(int distanceTravelled) {
+        this.distanceTravelled = distanceTravelled;
     }
 }

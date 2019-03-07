@@ -4,38 +4,50 @@ import java.util.ArrayList;
 
 public class Race {
 
-    private int round = 1;
-    private ArrayList<Truck> vehicles = new ArrayList<>();
+    private static int round = 10;
+    private static Weather weather = new Weather();
+    private static ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private static boolean isThereABrokenTruck;
 
-    public void simulateRace() {
-        for(int i =1; i<= 10; i++) {
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + round);
-            for(Truck vehicle : this.vehicles) {
-                vehicle.distanceTraveled += vehicle.moveForAnHour();
-                System.out.println("vehicle: " + vehicle.getName() + "distance: " + vehicle.getDistanceTraveled());
+
+    public void SimulateRace(){
+        for(int i = 0; i < round; i++) {
+            weather.setRaining();
+            isThereABrokenTruck = isThereABrokenTruck();
+            for(Vehicle vehicle: vehicles) {
+                vehicle.prepareForLap(this);
+                vehicle.moveForAnHour();
             }
-            round++;
+            printRaceResult();
         }
+
     }
 
-    public void printRaceResults() {
-        for(Truck vehicle : this.vehicles) {
-            System.out.println("The vehicle: " + vehicle.getName() + " has travelled " + vehicle.getDistanceTraveled());
+    public void printRaceResult() {
+        System.out.println(weather.isRaining());
+        for(Vehicle vehicle: vehicles) {
+            System.out.println(vehicle.getClass().getSimpleName() + ": " + vehicle.getName() + " speed: " + vehicle.getActualSpeed() + " moved: " + vehicle.getDistanceTravelled());
         }
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
     }
 
-    //for test
-    public void testSimulateOneRace(Vehicle vehicle) {
-        vehicle.distanceTraveled += vehicle.moveForAnHour();
+    public boolean isThereABrokenTruck() {
+        for(Vehicle vehicle: vehicles) {
+            if(vehicle instanceof Truck) {
+                if(((Truck) vehicle).getBreakdownLeft() > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    //setter and getter
-
-    public int getRound() {
-        return round;
+    public Weather getWeather() {
+        return weather;
     }
 
-    public void setVehicles(ArrayList<Truck> vehicles) {
-        this.vehicles = vehicles;
+    public void addVehicleToVehicles(Vehicle vehicle) {
+        vehicles.add(vehicle);
     }
 }

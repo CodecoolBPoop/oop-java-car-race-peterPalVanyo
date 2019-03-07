@@ -1,37 +1,14 @@
 package com.codecool.car_race;
 
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Util {
 
+    Random random = new Random();
 
-
-    public int generateANumber (int min, int max) {
-        Random random = new Random();
-        return random.ints(min, (max+1)).findFirst().getAsInt();
+    public int createRandom (int bottom, int up) {
+        int chosenNumber = ThreadLocalRandom.current().nextInt(bottom, up+1);
+        return chosenNumber;
     }
-
-    //for tracks
-
-    public ArrayList<String> generateListOfNumber (int elements, int min, int max) {
-        ArrayList<String> listOfNumbers = new ArrayList<>();
-        while(listOfNumbers.size() < elements) {
-            String currentRandomNumber = String.valueOf(generateANumber(min, max));
-            if(!listOfNumbers.contains(currentRandomNumber)) {
-                listOfNumbers.add(currentRandomNumber);
-            }
-        }
-        return listOfNumbers;
-    }
-
-    public boolean settingTheBreakdown () {
-        int breakdownCalc = generateANumber(1,100);
-        if(breakdownCalc < 3) {
-            return true;
-        }
-        return false;
-    }
-
-
 }
